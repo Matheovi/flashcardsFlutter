@@ -1,8 +1,13 @@
 import 'package:flashcards/features/home/widgets/deck_view.dart';
+import 'package:flashcards/features/new_flashcard/new_flashcard_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void navigateToNewFlashcardScreen(BuildContext context) {
+    Navigator.pushNamed(context, NewFlashcardScreen.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => navigateToNewFlashcardScreen(context),
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
       ),
