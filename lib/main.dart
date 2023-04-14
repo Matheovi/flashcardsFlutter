@@ -1,4 +1,5 @@
 import 'package:flashcards/features/home/screens/home_screen.dart';
+import 'package:flashcards/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flashcards',
+      onGenerateRoute: (settings) => generateRoute(settings),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
