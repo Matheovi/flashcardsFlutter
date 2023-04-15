@@ -5,6 +5,11 @@ class NewFlashcardScreen extends StatelessWidget {
 
   const NewFlashcardScreen({super.key});
 
+  void navigateBack(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -36,9 +41,11 @@ class NewFlashcardScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
+        onPressed: ()=>{navigateBack(context)},
+        backgroundColor: Colors.blue,
+        child: const Center(
+          child: Icon(Icons.arrow_right_sharp, size: 40,),
+        ),
       ),
     );
   }
