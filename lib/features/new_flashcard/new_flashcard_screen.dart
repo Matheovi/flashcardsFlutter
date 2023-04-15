@@ -7,10 +7,32 @@ class NewFlashcardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(
-        child: Text(
-          'NewFlashcardScreen'
+    return  Scaffold(
+      body: Center(
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: "Front Page",
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: "Back Page",
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
