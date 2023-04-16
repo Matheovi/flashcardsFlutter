@@ -20,8 +20,10 @@ class NewFlashcardScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: "Front Page",
                   ),
@@ -29,8 +31,10 @@ class NewFlashcardScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: "Back Page",
                   ),
