@@ -1,5 +1,5 @@
 import 'package:flashcards/features/home/widgets/deck_view.dart';
-import 'package:flashcards/features/new_flashcard/new_flashcard_screen.dart';
+import 'package:flashcards/features/new_flashcard/screens/new_flashcard_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
