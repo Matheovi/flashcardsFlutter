@@ -14,14 +14,28 @@ class NewFlashcardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
-        child: NewFlashcard(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()=>{navigateBack(context)},
-        backgroundColor: Colors.blue,
-        child: const Center(
-          child: Icon(Icons.arrow_right_sharp, size: 40,),
+        child: Stack(
+          children: [
+            const Align(
+              alignment: Alignment.center,
+              child: NewFlashcard()
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => navigateBack(context),
+                    child: const Text('Done')
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
