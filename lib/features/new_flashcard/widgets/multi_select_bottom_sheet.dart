@@ -1,20 +1,44 @@
 import 'package:flutter/material.dart';
 
 class MultiSelectBottomSheet extends StatefulWidget {
-  MultiSelectBottomSheet({super.key});
-  
+  final List<String> items;
+
+  MultiSelectBottomSheet({
+    required this.items,
+  });
+
   @override
-  State<MultiSelectBottomSheet> createState() => _MultiSelectBottomSheetState();
+  // ignore: no_logic_in_create_state
+  State<MultiSelectBottomSheet> createState() => _MultiSelectBottomSheetState(items);
+
+  List<String> filterItems(String? query, List<String> allItems) {
+    if (query != null && query.trim().isNotEmpty) {
+      List<String> filteredItems = [];
+      for (var item in allItems) {
+        if (item.toLowerCase().contains(query.toLowerCase())) {
+          filteredItems.add(item);
+        }
+      }
+      return filteredItems;
+    } else {
+      return allItems;
+    }
+  }
 }
 
 class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
+  bool _showSearch = false;
+  late List<String> _items;
+
+  _MultiSelectBottomSheetState(this._items);
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.3,
-      minChildSize: 0.3,
-      maxChildSize: 0.6,
       expand: false,
+      minChildSize: 0.4,
+      maxChildSize: 0.7,
+      initialChildSize: 0.7,
       builder: (BuildContext context, ScrollController scrollController) {
         return Column(
           children: [
@@ -23,9 +47,30 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  _showSearch ? Expanded(
+                    child: TextField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                      ),
+                      onChanged: (query) {
+                        var filteredItems = widget.filterItems(query, widget.items);
+                        setState(() {
+                          _items = filteredItems;
+                        });
+                      },
+                    ),
+                  ) : Text(
                     'Select',
                     style: Theme.of(context).textTheme.headline6,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      setState(() {
+                        _showSearch = !_showSearch;
+                      });
+                    },
                   ),
                 ],
               ),
@@ -33,11 +78,11 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
-                itemCount: 10,
+                itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
-                    title: Text('Dummy ${index+1}'),
+                    title: Text(_items[index]),
                     value: false,
                     onChanged: (bool? value) {},
                   );
@@ -80,7 +125,14 @@ void showMultiSelectBottomSheet({required BuildContext context}) async {
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context) {
-      return MultiSelectBottomSheet();
+      return MultiSelectBottomSheet(
+        items: [
+          "Apple",
+          "Banana",
+          "Orange",
+          "Watermelon",
+        ]
+      );
     }
   );
 }
