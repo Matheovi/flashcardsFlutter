@@ -1,3 +1,4 @@
+import 'package:flashcards/features/new_flashcard/widgets/multi_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class NewFlashcard extends StatelessWidget {
@@ -58,7 +59,9 @@ class NewFlashcard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
-                  onPressed: () => {},
+                  onPressed: () => showMultiSelectBottomSheet(
+                    context: context
+                  ),
                   child: const Text('Add to decks'),
                 ),
               ),
