@@ -24,6 +24,14 @@ class MultiSelectBottomSheet extends StatefulWidget {
       return allItems;
     }
   }
+
+  void onCancel(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void onConfirm(BuildContext context, /* selectedItems */) {
+    Navigator.pop(context /*, selectedItems */);
+  }
 }
 
 class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
@@ -95,7 +103,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
                 children: [
                   Expanded(
                     child: TextButton(
-                      onPressed: (){},
+                      onPressed: () => widget.onCancel(context),
                       child: Text(
                         'CANCEL',
                       ),
@@ -103,7 +111,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: (){},
+                      onPressed: () => widget.onConfirm(context),
                       child: Text(
                         'OK',
                       ),
