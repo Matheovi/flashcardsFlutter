@@ -12,8 +12,8 @@ class NewFlashcard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
@@ -23,8 +23,8 @@ class NewFlashcard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
