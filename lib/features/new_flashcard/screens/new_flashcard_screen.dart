@@ -50,6 +50,7 @@ class NewFlashcardScreen extends ConsumerWidget {
                         ref
                             .read(itemCountProvider.notifier)
                             .update((state) => 1);
+
                         navigateBack(context);
                       },
                       child: const Text('Done')),
