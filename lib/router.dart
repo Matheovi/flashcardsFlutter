@@ -5,7 +5,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case NewFlashcardScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const NewFlashcardScreen(),
+        builder: (context) => NewFlashcardScreen(),
       );
     default:
       return MaterialPageRoute(

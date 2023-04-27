@@ -1,3 +1,4 @@
+import 'package:flashcards/features/new_flashcard/widgets/multi_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class NewFlashcard extends StatelessWidget {
@@ -11,8 +12,8 @@ class NewFlashcard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
@@ -22,8 +23,8 @@ class NewFlashcard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
@@ -58,7 +59,9 @@ class NewFlashcard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
-                  onPressed: () => {},
+                  onPressed: () => showMultiSelectBottomSheet(
+                    context: context
+                  ),
                   child: const Text('Add to decks'),
                 ),
               ),
