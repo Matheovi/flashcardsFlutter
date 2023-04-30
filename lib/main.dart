@@ -1,4 +1,4 @@
-import 'package:flashcards/features/home/screens/home_screen.dart';
+import 'package:flashcards/features/home/presentation/view/home_page.dart';
 import 'package:flashcards/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const HomePage(),
     );
   }
 }

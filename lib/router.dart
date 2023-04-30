@@ -1,11 +1,11 @@
-import 'package:flashcards/features/new_flashcard/screens/new_flashcard_screen.dart';
+import 'package:flashcards/features/create_flashcard/presentation/view/flashcard_forms_list_page.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case NewFlashcardScreen.routeName:
+    case FlashcardFormsListPage.routeName:
       return MaterialPageRoute(
-        builder: (context) => NewFlashcardScreen(),
+        builder: (context) => FlashcardFormsListPage(),
       );
     default:
       return MaterialPageRoute(

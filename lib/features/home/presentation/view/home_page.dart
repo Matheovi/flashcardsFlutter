@@ -1,12 +1,12 @@
-import 'package:flashcards/features/home/widgets/deck_view.dart';
-import 'package:flashcards/features/new_flashcard/screens/new_flashcard_screen.dart';
+import 'package:flashcards/features/create_flashcard/presentation/view/flashcard_forms_list_page.dart';
+import 'package:flashcards/features/home/presentation/widget/deck_view.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   void navigateToNewFlashcardScreen(BuildContext context) {
-    Navigator.pushNamed(context, NewFlashcardScreen.routeName);
+    Navigator.pushNamed(context, FlashcardFormsListPage.routeName);
   }
 
   @override
