@@ -1,4 +1,5 @@
 import 'package:flashcards/features/flashcard/data/datasource/flashcard_db.dart';
+import 'package:flashcards/features/flashcard/data/mapper/flashcard_mapper.dart';
 import 'package:flashcards/features/flashcard/data/model/flashcard_model.dart';
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:path/path.dart';
@@ -42,7 +43,7 @@ class FlashcardSqfliteImpl implements FlashcardDb {
     await db.transaction((txn) async {
       final id = await txn.insert(
         _tableName,
-        FlashcardModel.toJson(entity),
+        FlashcardMapper.transformToJson(entity),
         conflictAlgorithm: sql.ConflictAlgorithm.replace,
       );
       final results = await txn.query(
@@ -50,7 +51,7 @@ class FlashcardSqfliteImpl implements FlashcardDb {
         where: '$_columnId = ?',
         whereArgs: [id],
       );
-      resultModel = FlashcardModel.fromJson(results.first);
+      resultModel = FlashcardMapper.transformFromJson(results.first);
     });
     print(resultModel);
     return resultModel;

@@ -14,17 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-FlashcardModel _$FlashcardModelFromJson(Map<String, dynamic> json) {
-  return _FlashcardModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$FlashcardModel {
   int get id => throw _privateConstructorUsedError;
   String get front => throw _privateConstructorUsedError;
   String get back => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FlashcardModelCopyWith<FlashcardModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -117,14 +112,11 @@ class __$$_FlashcardModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_FlashcardModel extends _FlashcardModel {
   const _$_FlashcardModel(
       {required this.id, required this.front, required this.back})
       : super._();
-
-  factory _$_FlashcardModel.fromJson(Map<String, dynamic> json) =>
-      _$$_FlashcardModelFromJson(json);
 
   @override
   final int id;
@@ -148,7 +140,6 @@ class _$_FlashcardModel extends _FlashcardModel {
             (identical(other.back, back) || other.back == back));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, front, back);
 
@@ -157,13 +148,6 @@ class _$_FlashcardModel extends _FlashcardModel {
   @pragma('vm:prefer-inline')
   _$$_FlashcardModelCopyWith<_$_FlashcardModel> get copyWith =>
       __$$_FlashcardModelCopyWithImpl<_$_FlashcardModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_FlashcardModelToJson(
-      this,
-    );
-  }
 }
 
 abstract class _FlashcardModel extends FlashcardModel {
@@ -172,9 +156,6 @@ abstract class _FlashcardModel extends FlashcardModel {
       required final String front,
       required final String back}) = _$_FlashcardModel;
   const _FlashcardModel._() : super._();
-
-  factory _FlashcardModel.fromJson(Map<String, dynamic> json) =
-      _$_FlashcardModel.fromJson;
 
   @override
   int get id;
