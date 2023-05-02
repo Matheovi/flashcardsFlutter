@@ -4,7 +4,7 @@ import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
-class FlashcardDbImpl implements FlashcardDb {
+class FlashcardSqfliteImpl implements FlashcardDb {
   static const _databaseName = 'flashcard_db';
   static const _tableName = 'flashcard_table';
   static const _databaseVersion = 1;
