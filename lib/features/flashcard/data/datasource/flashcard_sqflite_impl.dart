@@ -36,8 +36,7 @@ class FlashcardSqfliteImpl implements FlashcardDb {
   }
 
   @override
-  Future<FlashcardModel> insert(final Flashcard entity) async {
-    print(entity);
+  Future<FlashcardModel> put(final Flashcard entity) async {
     final db = await database;
     late final FlashcardModel resultModel;
     await db.transaction((txn) async {
@@ -53,7 +52,28 @@ class FlashcardSqfliteImpl implements FlashcardDb {
       );
       resultModel = FlashcardMapper.transformFromJson(results.first);
     });
-    print(resultModel);
     return resultModel;
+  }
+  
+  @override
+  Future<void> delete(final int id) async {
+    final db = await database;
+    await db.delete(
+      _tableName,
+      where: '$_columnId = ?',
+      whereArgs: [id],
+    );
+  }
+  
+  @override
+  Future<void> update(Map<String, dynamic> json) async {
+    final db = await database;
+    final int id = json['id'];
+    await db.update(
+      _tableName,
+      json,
+      where: '$_columnId = ?',
+      whereArgs: [id],
+    );
   }
 }
