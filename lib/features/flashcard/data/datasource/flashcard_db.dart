@@ -1,5 +1,5 @@
-import 'package:flashcards/features/create_flashcard/data/model/flashcard_model.dart';
-import 'package:flashcards/features/create_flashcard/domain/entity/flashcard.dart';
+import 'package:flashcards/features/flashcard/data/model/flashcard_model.dart';
+import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 
 abstract class FlashcardDb {
   Future<FlashcardModel> insert(final Flashcard entity);

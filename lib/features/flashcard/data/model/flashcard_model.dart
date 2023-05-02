@@ -1,4 +1,4 @@
-import 'package:flashcards/features/create_flashcard/domain/entity/flashcard.dart';
+import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'flashcard_model.freezed.dart';

@@ -1,6 +1,6 @@
-import 'package:flashcards/features/create_flashcard/data/datasource/flashcard_db.dart';
-import 'package:flashcards/features/create_flashcard/data/model/flashcard_model.dart';
-import 'package:flashcards/features/create_flashcard/domain/entity/flashcard.dart';
+import 'package:flashcards/features/flashcard/data/datasource/flashcard_db.dart';
+import 'package:flashcards/features/flashcard/data/model/flashcard_model.dart';
+import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
