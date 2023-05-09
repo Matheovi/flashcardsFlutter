@@ -2,7 +2,7 @@ import 'package:flashcards/features/flashcard/data/model/flashcard_model.dart';
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 
 class FlashcardMapper {
-  static FlashcardModel transformFromJson(Map<String, dynamic> json) {
+  static FlashcardModel transformFromJsonToModel(Map<String, dynamic> json) {
     return FlashcardModel(
       id: json['id'],
       front: json['front'],
@@ -10,9 +10,8 @@ class FlashcardMapper {
     );
   }
 
-  static Map<String, dynamic> transformToJson(Flashcard entity) {
+  static Map<String, dynamic> transformFromEntityToJson(Flashcard entity) {
     return {
-      'id': null,
       'front': entity.front,
       'back': entity.back,
     };

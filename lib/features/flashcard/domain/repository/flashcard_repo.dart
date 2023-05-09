@@ -1,7 +1,8 @@
-import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
+import 'package:flashcards/core/data/error/failure.dart';
+import 'package:fpdart/fpdart.dart';
 
 abstract class FlashcardRepo {
-  Future<Flashcard> createFlashcard(final String front, final String back);
-  Future<void> deleteFlashcard(final int id);
-  Future<void> updateFlashcard(final String front, final String back);
+  Future<Either<Failure, void>> createFlashcard(final String front, final String back);
+  Future<Either<Failure, void>> deleteFlashcard(final int id);
+  Future<Either<Failure, void>> updateFlashcard(final String front, final String back);
 }
