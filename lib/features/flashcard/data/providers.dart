@@ -5,4 +5,4 @@ import 'package:flashcards/features/flashcard/domain/repository/flashcard_repo.d
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final flashcardDatabaseProvider = Provider<FlashcardDatabase>((_) => FlashcardDatabaseImpl());
-final flashcardFormsListRepoProvider = Provider<FlashcardRepo>((ref) => FlashcardRepoImpl(ref.watch(flashcardDatabaseProvider)));
+final flashcardRepoProvider = Provider<FlashcardRepo>((ref) => FlashcardRepoImpl(ref.watch(flashcardDatabaseProvider)));
