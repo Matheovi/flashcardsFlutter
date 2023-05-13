@@ -1,4 +1,4 @@
-import 'package:flashcards/core/data/error/failure.dart';
+import 'package:flashcards/core/domain/error/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract class FlashcardRepo {

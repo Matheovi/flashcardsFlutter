@@ -1,4 +1,4 @@
-import 'package:flashcards/core/data/error/failure.dart';
+import 'package:flashcards/core/domain/error/failure.dart';
 import 'package:flashcards/features/flashcard/data/datasource/flashcard_database.dart';
 import 'package:flashcards/features/flashcard/data/error/flashcard_database_error.dart';
 import 'package:flashcards/features/flashcard/data/mapper/flashcard_mapper.dart';
