@@ -1,15 +1,19 @@
+import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
+import 'package:flashcards/features/flashcard/presentation/viewmodel/flashcard_forms_list_viewmodel.dart';
 import 'package:flashcards/features/flashcard/presentation/widget/multi_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final itemCountProvider = StateProvider<int>((ref) => 1);
+//final itemCountProvider = StateProvider<int>((ref) => 1);
 
 class FlashcardFormsListPage extends ConsumerWidget {
   static const String routeName = '/new-flashcard';
 
+  final _flashcardFormsListProvider = flashcardFormsListViewModelStateNotifierProvider;
+
   FlashcardFormsListPage({super.key});
 
-  Widget _buildFlashcardCardWidget(BuildContext context, WidgetRef ref) {
+  Widget _buildFlashcardFormWidget(BuildContext context, WidgetRef ref, final Flashcard flashcard) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
@@ -78,24 +82,40 @@ class FlashcardFormsListPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildFlashcardFormsListWidget(BuildContext context, WidgetRef ref) {
+  Widget _buildFlashcardAddButton(BuildContext context, WidgetRef ref) {
+    return IconButton(
+      onPressed: () {
+        ref
+            .read(_flashcardFormsListProvider.notifier)
+            .addFlashcard("", "");
+      },
+      icon: const Icon(Icons.add_circle),
+      color: Colors.green,
+    );
+  }
+
+  Widget _buildFlashcardOneFormWidget(BuildContext context, WidgetRef ref, final List<Flashcard> flashcardList) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildFlashcardFormWidget(context, ref, flashcardList[0]),
+          _buildFlashcardAddButton(context, ref),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFlashcardFormsListWidget(BuildContext context, WidgetRef ref, final List<Flashcard> flashcardList) {
     return Expanded(
       child: ListView.builder(
-      itemCount: ref.watch(itemCountProvider) + 1,
+      itemCount: ref.watch(_flashcardFormsListProvider).length + 1,
       itemBuilder: (context, index) {
-        // put IconButton at the end of ListView instead of NewFlashcard
-        if (index == ref.read(itemCountProvider)) {
-          return IconButton(
-            onPressed: () {
-              ref
-                  .read(itemCountProvider.notifier)
-                  .update((state) => state + 1);
-            },
-            icon: const Icon(Icons.add_circle),
-            color: Colors.green,
-          );
+        // put IconButton at the end of ListView instead of a Flashcard Form
+        if (index == ref.read(_flashcardFormsListProvider).length) {
+          return _buildFlashcardAddButton(context, ref);
         }
-        return _buildFlashcardCardWidget(context, ref);
+        return _buildFlashcardFormWidget(context, ref, flashcardList[index]);
       },
     ));
   }
@@ -108,12 +128,7 @@ class FlashcardFormsListPage extends ConsumerWidget {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-              onPressed: () => {},
-              //   ref
-              //       .read(itemCountProvider.notifier)
-              //       .update((state) => 1);
-              //   navigateBack(context);
-              // },
+              onPressed: () => Navigator.pop(context),
               child: const Text('Done')),
         ),
       ),
@@ -127,7 +142,18 @@ class FlashcardFormsListPage extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _buildFlashcardFormsListWidget(context, ref),
+            if (1 == ref.read(_flashcardFormsListProvider).length)
+              _buildFlashcardOneFormWidget(context, ref, ref.watch(_flashcardFormsListProvider))
+            else
+              _buildFlashcardFormsListWidget(context, ref, ref.watch(_flashcardFormsListProvider)),
+            // ref.watch(flashcardListProvider).maybeWhen(
+            /*success: (flashcardList) =>*/
+            // error: (_) => _buildErrorWidget()
+            // loading: () => const Expanded(
+            //   child: Center(
+            //     child: CircularProgressIndicator(),
+            //   ),
+            // ),
             _buildDoneButton(context, ref),
           ],
         ),
