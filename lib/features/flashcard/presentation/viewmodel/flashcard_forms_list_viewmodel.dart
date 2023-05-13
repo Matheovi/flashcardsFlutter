@@ -1,5 +1,4 @@
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
-import 'package:flashcards/features/flashcard/domain/usecase/create_flashcard_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
