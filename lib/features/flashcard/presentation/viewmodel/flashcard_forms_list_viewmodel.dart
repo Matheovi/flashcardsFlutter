@@ -2,20 +2,17 @@ import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final flashcardFormsListViewModelStateNotifierProvider = StateNotifierProvider.autoDispose<FlashcardFormsListViewModel, List<Flashcard>>(
-  (ref) => FlashcardFormsListViewModel(
-
-  )
-);
+final flashcardFormsListViewModelStateNotifierProvider =
+    StateNotifierProvider.autoDispose<FlashcardFormsListViewModel,
+        List<Flashcard>>((ref) => FlashcardFormsListViewModel());
 
 class FlashcardFormsListViewModel extends StateNotifier<List<Flashcard>> {
   // final CreateFlashcardUsecase createFlashcardUsecase;
 
   FlashcardFormsListViewModel(
-  //  this.createFlashcardUsecase
-  ) : super([
-    const Flashcard(front: "", back: "")
-  ]);
+      //  this.createFlashcardUsecase
+      )
+      : super([const Flashcard(front: "", back: "")]);
 
   void commit() {
     for (final flashcard in state) {
@@ -31,7 +28,7 @@ class FlashcardFormsListViewModel extends StateNotifier<List<Flashcard>> {
     state = [...state, Flashcard(front: front, back: back)];
     debugPrint("LIST LENGTH: ${state.length}");
   }
-  
+
   void updateFlashcard(int index, {String? front, String? back}) {
     debugPrint("updateFlashcard");
     state = [
