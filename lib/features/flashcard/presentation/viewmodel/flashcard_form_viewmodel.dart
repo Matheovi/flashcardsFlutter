@@ -8,8 +8,9 @@ final flashcardFormViewModelStateNotifierProvider = Provider.autoDispose.family<
 
 class FlashcardFormViewModel {
   final FlashcardListViewModel _flashcardListViewModel;
+  late List<bool> selectedDecksOrder;
 
   FlashcardFormViewModel(final Flashcard? flashcard, this._flashcardListViewModel) {
-    // TODO
+    selectedDecksOrder = List.filled(5, false);
   }
 }

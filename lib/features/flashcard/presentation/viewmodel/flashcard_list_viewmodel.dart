@@ -20,12 +20,12 @@ class FlashcardListViewModel extends StateNotifier<List<Flashcard>> {
     throw UnimplementedError("TODO");
   }
 
-  void add(String front, String back) {
+  void appendEmpty() {
     state = [
       ...state,
-      Flashcard(
-        frontText: front,
-        backText: back
+      const Flashcard(
+        frontText: "",
+        backText: "",
       )
     ];
   }

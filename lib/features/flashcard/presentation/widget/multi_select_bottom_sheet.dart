@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MultiSelectBottomSheet extends StatefulWidget {
   final List<String> items;
+  final List<bool> selectedOrder;
   
   final String? cancelText;
   final String? confirmText;
@@ -9,9 +10,10 @@ class MultiSelectBottomSheet extends StatefulWidget {
   const MultiSelectBottomSheet({
     super.key, 
     required this.items,
+    required this.selectedOrder,
     this.cancelText,
     this.confirmText,
-  });
+  }) : assert(items.length == selectedOrder.length);
 
   @override
   State<MultiSelectBottomSheet> createState() => _MultiSelectBottomSheetState();
@@ -42,6 +44,7 @@ class MultiSelectBottomSheet extends StatefulWidget {
 class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
   bool _showSearch = false;
   late List<String> _items;
+  late List<bool> _selectedOrder;
 
   _MultiSelectBottomSheetState();
 
@@ -49,6 +52,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
   void initState() {
     super.initState();
     _items = List.from(widget.items);
+    _selectedOrder = List.from(widget.selectedOrder);
   }
 
   @override
@@ -75,6 +79,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
                           hintText: 'Search',
                         ),
                         onChanged: (query) {
+                          // TODO: value of checkboxes disappears after filtering
                           var filteredItems = widget.filterItems(query, widget.items);
                           setState(() {
                             _items = filteredItems;
@@ -108,8 +113,12 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
                   return CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     title: Text(_items[index]),
-                    value: false,
-                    onChanged: (bool? value) {},
+                    value: _selectedOrder[index],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _selectedOrder[index] = value!;
+                      });
+                    },
                   );
                 }
               ),

@@ -1,4 +1,5 @@
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
+import 'package:flashcards/features/flashcard/presentation/viewmodel/flashcard_form_viewmodel.dart';
 import 'package:flashcards/features/flashcard/presentation/viewmodel/flashcard_list_viewmodel.dart';
 import 'package:flashcards/features/flashcard/presentation/widget/multi_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class FlashcardFormsListPage extends ConsumerWidget {
             children: [
               // If there's only 1 flashcard, then put it in a column instead of ListView.
               // This is done in order to center vertically the only flashcard on the screen.
-              if (1 == ref.read(_flashcardListProvider).length)
+              if (1 == ref.watch(_flashcardListProvider).length)
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +116,7 @@ class FlashcardFormsListPage extends ConsumerWidget {
   Widget _buildFlashcardAddButton(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () {
-        ref.read(_flashcardListProvider.notifier).add("", "");
+        ref.read(_flashcardListProvider.notifier).appendEmpty();
       },
       icon: const Icon(Icons.add_circle),
       color: Colors.green,
@@ -206,18 +207,29 @@ class FlashcardFormsListPage extends ConsumerWidget {
 
   /// Helper method for showing [MultiSelectBottomSheet] in order to select flashcard's decks.
   void _showDecksSelection(BuildContext context, WidgetRef ref, int index) async {
+    // final flashcardFormProvider =
+    //     ref.watch(flashcardFormViewModelStateNotifierProvider(ref.read(_flashcardListProvider)[index]));
     return await showModalBottomSheet(
       isDismissible: false,
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        return const MultiSelectBottomSheet(
-          items: [
-            "Apple",
-            "Banana",
-            "Orange",
-            "Watermelon",
-          ]
+        return MultiSelectBottomSheet(
+          // DUMMY DATA
+          items: const [
+            "Dummy 1",
+            "Dummy 2",
+            "Dummy 3",
+            "Dummy 4",
+            "Dummy 5",
+          ],
+          selectedOrder: const [
+            false,
+            true,
+            false,
+            false,
+            true,
+          ],
         );
       }
     );
