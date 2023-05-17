@@ -5,7 +5,7 @@ part 'flashcard.freezed.dart';
 @freezed
 class Flashcard with _$Flashcard {
   const factory Flashcard({
-    required String front,
-    required String back,
+    required String frontText,
+    required String backText,
   }) = _Flashcard;
 }

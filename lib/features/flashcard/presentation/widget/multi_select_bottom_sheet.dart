@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 
 class MultiSelectBottomSheet extends StatefulWidget {
   final List<String> items;
+  
+  final String? cancelText;
+  final String? confirmText;
 
-  MultiSelectBottomSheet({
+  const MultiSelectBottomSheet({
+    super.key, 
     required this.items,
+    this.cancelText,
+    this.confirmText,
   });
 
   @override
-  // ignore: no_logic_in_create_state
-  State<MultiSelectBottomSheet> createState() => _MultiSelectBottomSheetState(items);
+  State<MultiSelectBottomSheet> createState() => _MultiSelectBottomSheetState();
 
   List<String> filterItems(String? query, List<String> allItems) {
     if (query != null && query.trim().isNotEmpty) {
@@ -38,7 +43,13 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
   bool _showSearch = false;
   late List<String> _items;
 
-  _MultiSelectBottomSheetState(this._items);
+  _MultiSelectBottomSheetState();
+
+  @override
+  void initState() {
+    super.initState();
+    _items = List.from(widget.items);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,34 +62,40 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _showSearch ? Expanded(
-                    child: TextField(
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        hintText: 'Search',
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: TextField(
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Search',
+                        ),
+                        onChanged: (query) {
+                          var filteredItems = widget.filterItems(query, widget.items);
+                          setState(() {
+                            _items = filteredItems;
+                          });
+                        },
                       ),
-                      onChanged: (query) {
-                        var filteredItems = widget.filterItems(query, widget.items);
-                        setState(() {
-                          _items = filteredItems;
-                        });
-                      },
                     ),
                   ) : Text(
                     'Select',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: () {
-                      setState(() {
-                        _showSearch = !_showSearch;
-                      });
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 16.0),
+                    child: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          _showSearch = !_showSearch;
+                        });
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -98,14 +115,14 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Expanded(
                     child: TextButton(
                       onPressed: () => widget.onCancel(context),
                       child: Text(
-                        'CANCEL',
+                        widget.cancelText ?? 'CANCEL',
                       ),
                     ),
                   ),
@@ -113,7 +130,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
                     child: TextButton(
                       onPressed: () => widget.onConfirm(context),
                       child: Text(
-                        'OK',
+                        widget.confirmText ?? 'OK',
                       ),
                     ),
                   ),
@@ -125,22 +142,4 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
       },
     );
   }
-}
-
-void showMultiSelectBottomSheet({required BuildContext context}) async {
-  return await showModalBottomSheet(
-    isDismissible: false,
-    isScrollControlled: true,
-    context: context,
-    builder: (BuildContext context) {
-      return MultiSelectBottomSheet(
-        items: [
-          "Apple",
-          "Banana",
-          "Orange",
-          "Watermelon",
-        ]
-      );
-    }
-  );
 }

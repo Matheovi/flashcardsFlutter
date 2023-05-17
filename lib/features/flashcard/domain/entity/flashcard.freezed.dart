@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Flashcard {
-  String get front => throw _privateConstructorUsedError;
-  String get back => throw _privateConstructorUsedError;
+  String get frontText => throw _privateConstructorUsedError;
+  String get backText => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FlashcardCopyWith<Flashcard> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $FlashcardCopyWith<$Res> {
   factory $FlashcardCopyWith(Flashcard value, $Res Function(Flashcard) then) =
       _$FlashcardCopyWithImpl<$Res, Flashcard>;
   @useResult
-  $Res call({String front, String back});
+  $Res call({String frontText, String backText});
 }
 
 /// @nodoc
@@ -45,17 +45,17 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? front = null,
-    Object? back = null,
+    Object? frontText = null,
+    Object? backText = null,
   }) {
     return _then(_value.copyWith(
-      front: null == front
-          ? _value.front
-          : front // ignore: cast_nullable_to_non_nullable
+      frontText: null == frontText
+          ? _value.frontText
+          : frontText // ignore: cast_nullable_to_non_nullable
               as String,
-      back: null == back
-          ? _value.back
-          : back // ignore: cast_nullable_to_non_nullable
+      backText: null == backText
+          ? _value.backText
+          : backText // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -68,7 +68,7 @@ abstract class _$$_FlashcardCopyWith<$Res> implements $FlashcardCopyWith<$Res> {
       __$$_FlashcardCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String front, String back});
+  $Res call({String frontText, String backText});
 }
 
 /// @nodoc
@@ -82,17 +82,17 @@ class __$$_FlashcardCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? front = null,
-    Object? back = null,
+    Object? frontText = null,
+    Object? backText = null,
   }) {
     return _then(_$_Flashcard(
-      front: null == front
-          ? _value.front
-          : front // ignore: cast_nullable_to_non_nullable
+      frontText: null == frontText
+          ? _value.frontText
+          : frontText // ignore: cast_nullable_to_non_nullable
               as String,
-      back: null == back
-          ? _value.back
-          : back // ignore: cast_nullable_to_non_nullable
+      backText: null == backText
+          ? _value.backText
+          : backText // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -101,16 +101,16 @@ class __$$_FlashcardCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Flashcard implements _Flashcard {
-  const _$_Flashcard({required this.front, required this.back});
+  const _$_Flashcard({required this.frontText, required this.backText});
 
   @override
-  final String front;
+  final String frontText;
   @override
-  final String back;
+  final String backText;
 
   @override
   String toString() {
-    return 'Flashcard(front: $front, back: $back)';
+    return 'Flashcard(frontText: $frontText, backText: $backText)';
   }
 
   @override
@@ -118,12 +118,14 @@ class _$_Flashcard implements _Flashcard {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Flashcard &&
-            (identical(other.front, front) || other.front == front) &&
-            (identical(other.back, back) || other.back == back));
+            (identical(other.frontText, frontText) ||
+                other.frontText == frontText) &&
+            (identical(other.backText, backText) ||
+                other.backText == backText));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, front, back);
+  int get hashCode => Object.hash(runtimeType, frontText, backText);
 
   @JsonKey(ignore: true)
   @override
@@ -134,12 +136,13 @@ class _$_Flashcard implements _Flashcard {
 
 abstract class _Flashcard implements Flashcard {
   const factory _Flashcard(
-      {required final String front, required final String back}) = _$_Flashcard;
+      {required final String frontText,
+      required final String backText}) = _$_Flashcard;
 
   @override
-  String get front;
+  String get frontText;
   @override
-  String get back;
+  String get backText;
   @override
   @JsonKey(ignore: true)
   _$$_FlashcardCopyWith<_$_Flashcard> get copyWith =>
