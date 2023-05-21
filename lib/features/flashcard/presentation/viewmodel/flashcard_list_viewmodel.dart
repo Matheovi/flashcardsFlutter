@@ -2,14 +2,14 @@ import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final flashcardListViewModelStateNotifierProvider =
-    StateNotifierProvider.autoDispose<FlashcardListViewModel, List<Flashcard>>((ref) => FlashcardListViewModel());
+    StateNotifierProvider.autoDispose<FlashcardListViewModel, List<Flashcard>>(
+      (ref) => FlashcardListViewModel(null /* TODO: pass the deck's flashcards somehow */));
 
 class FlashcardListViewModel extends StateNotifier<List<Flashcard>> {
-  // final CreateFlashcardUsecase createFlashcardUsecase;
 
   FlashcardListViewModel(
-  //  this.createFlashcardUsecase
-  ) : super([
+    List<Flashcard>? flashcards,
+  ) : super(flashcards ?? [
     const Flashcard(
       frontText: "",
       backText: "",

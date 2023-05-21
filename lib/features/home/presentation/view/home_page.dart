@@ -1,13 +1,10 @@
+import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:flashcards/features/flashcard/presentation/view/flashcard_forms_list_page.dart';
 import 'package:flashcards/features/home/presentation/widget/deck_view.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  void navigateToNewFlashcardScreen(BuildContext context) {
-    Navigator.pushNamed(context, FlashcardFormsListPage.routeName);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +14,15 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               DeckView(
-                children: List.generate(
-                  10, (index) => Padding(
+                children: List.generate(10, (index) => 
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      child: Center(
-                        child: Text('Dummy ${index + 1}')
+                    child: GestureDetector(
+                      onTap:() => navigateToBrowseDeckScreen(context, 'Dummy ${index + 1}'),
+                      child: Card(
+                        child: Center(
+                          child: Text('Dummy ${index + 1}')
+                        ),
                       ),
                     ),
                   )
@@ -33,10 +33,32 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => navigateToNewFlashcardScreen(context),
+        onPressed: () => navigateToNewDeckScreen(context),
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  /// Navigates to existing deck screen.
+  void navigateToBrowseDeckScreen(BuildContext context, final String title) {
+    var args = {
+      'title': title,
+      'flashcards': const [
+        Flashcard(
+          frontText: 'FrontTest',
+          backText: 'BackTest',
+        )
+      ],
+    };
+    Navigator.pushNamed(context, FlashcardFormsListPage.routeName, arguments: args);
+  }
+
+  /// Navigates to 'New deck' screen.
+  void navigateToNewDeckScreen(BuildContext context) {
+    var args = {
+      'title': 'New deck', 
+    };
+    Navigator.pushNamed(context, FlashcardFormsListPage.routeName, arguments: args);
   }
 }

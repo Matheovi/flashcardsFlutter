@@ -1,44 +1,74 @@
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
-import 'package:flashcards/features/flashcard/presentation/viewmodel/flashcard_form_viewmodel.dart';
 import 'package:flashcards/features/flashcard/presentation/viewmodel/flashcard_list_viewmodel.dart';
-import 'package:flashcards/features/flashcard/presentation/widget/multi_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FlashcardFormsListPage extends ConsumerWidget {
-  static const String routeName = '/new-flashcard';
+class FlashcardFormsListPage extends ConsumerStatefulWidget {
+  static const String routeName = '/flashcards';
 
-  final _flashcardListProvider =
-      flashcardListViewModelStateNotifierProvider;
+  final String title;
+  final List<Flashcard>? flashcards;
 
-  FlashcardFormsListPage({super.key});
+  const FlashcardFormsListPage({
+    super.key,
+    required this.title,
+    this.flashcards,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _FlashcardFormsListPageState();
+}
+
+class _FlashcardFormsListPageState extends ConsumerState<FlashcardFormsListPage> {
+  final _flashcardListProvider = flashcardListViewModelStateNotifierProvider;
+
+  _FlashcardFormsListPageState();
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => await _checkForUnsavedProgress(ref, context),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Column(
-            children: [
-              // If there's only 1 flashcard, then put it in a column instead of ListView.
-              // This is done in order to center vertically the only flashcard on the screen.
-              if (1 == ref.watch(_flashcardListProvider).length)
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildFlashcardFormWidget(context, ref, 0),
-                      _buildFlashcardAddButton(context, ref),
-                    ],
+        body: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  expandedHeight: 200.0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(widget.title),
+                    // background: ??
                   ),
-                )
-              else
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: ref.watch(_flashcardListProvider).length + 1, // required by hack below
-                    itemBuilder: (context, index) {
+                  actions: widget.flashcards != null ? _buildAppBarActionButtons(context) : [],
+                ),
+                if (widget.flashcards != null)
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: Colors.grey,
+                    child: Column(
+                      children: [
+                        // START TRAINING
+                        SizedBox(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              child: const Text('Start training'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
                       // hack? put the IconButton at the end of the ListView instead of a flashcard form
                       if (index == ref.read(_flashcardListProvider).length) {
                         return _buildFlashcardAddButton(context, ref);
@@ -46,12 +76,15 @@ class FlashcardFormsListPage extends ConsumerWidget {
                         return _buildFlashcardFormWidget(context, ref, index);
                       }
                     },
-                  )
-                )
-              ,
-              _buildDoneButton(context, ref),
-            ],
-          ),
+                    // required by hack above
+                    childCount: ref.watch(_flashcardListProvider).length + 1, 
+                  ),
+                ),
+              ],
+            ),
+            // TODO: make this button show up on scroll down and disappear on scroll up
+            _buildDoneButton(context, ref),
+          ]
         ),
       ),
     );
@@ -70,7 +103,7 @@ class FlashcardFormsListPage extends ConsumerWidget {
       // unsaved progress, proceed?
       return await showDialog(
         context: context,
-        builder: (context) => _buildWillOnPopAlertDialog(context, ref)
+        builder: (context) => _buildWillOnPopAlertDialog(context)
       );
     } else {
       // dismiss.
@@ -79,7 +112,7 @@ class FlashcardFormsListPage extends ConsumerWidget {
   }
 
   /// Helper method for building the will on pop alert dialog.
-  Widget _buildWillOnPopAlertDialog(BuildContext context, WidgetRef ref) {
+  Widget _buildWillOnPopAlertDialog(BuildContext context) {
     return AlertDialog(
       title: const Text('You have unsaved progress'),
       content: const Text('Do you really want to quit?'),
@@ -96,17 +129,31 @@ class FlashcardFormsListPage extends ConsumerWidget {
     );
   }
 
+  List<Widget> _buildAppBarActionButtons(BuildContext context) {
+    return <Widget>[
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.share),
+      ),
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.delete),
+      ),
+    ];
+  }
+
   /// Helper method for building the 'Done' button.
   Widget _buildDoneButton(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: SizedBox(
-          width: double.infinity,
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Done')),
+            onPressed: () {},
+            child: const Text('DONE'),
+          ),
         ),
       ),
     );
@@ -114,26 +161,31 @@ class FlashcardFormsListPage extends ConsumerWidget {
 
   /// Builds the add button for adding new flashcard.
   Widget _buildFlashcardAddButton(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      onPressed: () {
-        ref.read(_flashcardListProvider.notifier).appendEmpty();
-      },
-      icon: const Icon(Icons.add_circle),
-      color: Colors.green,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 80.0),
+      child: IconButton(
+        onPressed: () {
+          ref.read(_flashcardListProvider.notifier).appendEmpty();
+        },
+        icon: const Icon(Icons.add_circle),
+        color: Colors.green,
+      ),
     );
   }
 
   /// Builds single flashcard form widget.
   Widget _buildFlashcardFormWidget(BuildContext context, WidgetRef ref, int index) {
     return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
+      padding: const EdgeInsets.all(16.0),
+      child: Card(
+        child: Column(
+          //mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0, bottom: 4.0),
+              child: Column(
+                children: [
+                  TextFormField(
                     onChanged: (text) {
                       ref
                           .read(_flashcardListProvider.notifier)
@@ -145,93 +197,61 @@ class FlashcardFormsListPage extends ConsumerWidget {
                         .read(_flashcardListProvider)
                         [index]
                         .frontText,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: "Front Text",
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  onChanged: (text) {
-                    ref
-                        .read(_flashcardListProvider.notifier)
-                        .updateAt(index, backText: text);
-                  },
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  initialValue: ref
-                      .read(_flashcardListProvider)
-                      [index]
-                      .backText,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: "Back Text",
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Front Text'.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Decks:',
-                    style: Theme.of(context).textTheme.bodySmall,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 4.0, right: 16.0, bottom: 24.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    onChanged: (text) {
+                      ref
+                          .read(_flashcardListProvider.notifier)
+                          .updateAt(index, backText: text);
+                    },
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    initialValue: ref
+                        .read(_flashcardListProvider)
+                        [index]
+                        .backText,
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Back Text'.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Dummy 1, Dummy 2, Dummy 3',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: () => _showDecksSelection(context, ref, index),
-                    child: const Text('Select decks'),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-
-  /// Helper method for showing [MultiSelectBottomSheet] in order to select flashcard's decks.
-  void _showDecksSelection(BuildContext context, WidgetRef ref, int index) async {
-    // final flashcardFormProvider =
-    //     ref.watch(flashcardFormViewModelStateNotifierProvider(ref.read(_flashcardListProvider)[index]));
-    return await showModalBottomSheet(
-      isDismissible: false,
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return MultiSelectBottomSheet(
-          // DUMMY DATA
-          items: const [
-            "Dummy 1",
-            "Dummy 2",
-            "Dummy 3",
-            "Dummy 4",
-            "Dummy 5",
+            ),
           ],
-          selectedOrder: const [
-            false,
-            true,
-            false,
-            false,
-            true,
-          ],
-        );
-      }
+        ),
+      )
     );
   }
 }

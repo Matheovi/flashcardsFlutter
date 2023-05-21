@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
+
     case FlashcardFormsListPage.routeName:
+      final args = settings.arguments as Map<String, dynamic>;
+      final title = args['title'];
+      final flashcards = args['flashcards'];
       return MaterialPageRoute(
-        builder: (context) => FlashcardFormsListPage(),
+        builder: (context) => FlashcardFormsListPage(
+          title: title,
+          flashcards: flashcards,
+        ),
       );
+
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
