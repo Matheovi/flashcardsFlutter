@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TrainingFlashcard extends StatefulWidget {
-  final String? frontText;
-  final String? backText;
+  final String frontText;
+  final String backText;
 
   const TrainingFlashcard(
     BuildContext context, {
@@ -16,7 +16,7 @@ class TrainingFlashcard extends StatefulWidget {
 
 class _TrainingFlashcardState extends State<TrainingFlashcard> {
   bool backShown = false;
-  String? textShown;
+  late String textShown;
 
   @override
   void initState() {
@@ -28,8 +28,7 @@ class _TrainingFlashcardState extends State<TrainingFlashcard> {
     return GestureDetector(
         onTap: () {
           setState(() {
-            backShown = true;
-            textShown = widget.backText;
+            backShown = !backShown;
           });
         },
         child: Dismissible(
@@ -45,7 +44,7 @@ class _TrainingFlashcardState extends State<TrainingFlashcard> {
           child: Card(
               child: Center(
                   child: Text(
-            textShown!,
+            backShown ? widget.backText : widget.frontText,
           ))),
         ));
   }
