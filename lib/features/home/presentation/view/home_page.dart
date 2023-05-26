@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TrainingPage();
+    return TrainingScreen();
     // return Scaffold(
     //   body: SafeArea(
     //     child: SingleChildScrollView(

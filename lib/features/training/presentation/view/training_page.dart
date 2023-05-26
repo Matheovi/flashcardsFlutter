@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:flashcards/features/training/presentation/widget/training_flashcard.dart';
 
-class TrainingPage extends StatefulWidget {
-  TrainingPage({super.key});
+class TrainingScreen extends StatefulWidget {
+  TrainingScreen({super.key});
 
   @override
-  State<TrainingPage> createState() => _TrainingPageState();
+  State<TrainingScreen> createState() => _TrainingScreenState();
 }
 
-class _TrainingPageState extends State<TrainingPage> {
+class _TrainingScreenState extends State<TrainingScreen> {
   final List<Flashcard> flashcards = [
     const Flashcard(frontText: "sumpcak", backText: "kejuhc"),
     const Flashcard(frontText: "pies", backText: "dog"),
