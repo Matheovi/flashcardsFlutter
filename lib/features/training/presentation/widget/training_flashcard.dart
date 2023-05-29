@@ -35,7 +35,8 @@ class _TrainingFlashcardState extends State<TrainingFlashcard> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
         tween: Tween<double>(begin: 0, end: angle),
-        duration: Duration(milliseconds: 500),
+        //TODO: give the user the ability to set the rotation time
+        duration: const Duration(milliseconds: 500),
         builder: (BuildContext context, double val, _) {
           if (val >= (pi / 2)) {
             backShown = true;

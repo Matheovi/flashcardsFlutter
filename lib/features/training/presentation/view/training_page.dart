@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flashcards/features/flashcard/domain/entity/flashcard.dart';
 import 'package:flashcards/features/training/presentation/widget/training_flashcard.dart';
 
+import '../widget/interactive_training_flashcard.dart';
+
 class TrainingScreen extends StatefulWidget {
   TrainingScreen({super.key});
 
@@ -43,13 +45,15 @@ class _TrainingScreenState extends State<TrainingScreen> {
           )),
     );
   }
-
+//TODO: W zależności od typu fiszki, dać stosowny widget do listy
   Widget _buildStack(BuildContext context) {
     return Stack(
         fit: StackFit.expand,
-        children: List<TrainingFlashcard>.generate(
+        //children: List<TrainingFlashcard>.generate(
+        children: List<InteractiveTrainingFlashcard>.generate(
             flashcards.length,
-            (index) => TrainingFlashcard(context,
+            (index) => InteractiveTrainingFlashcard(context,
+            //(index) => TrainingFlashcard(context,
                 frontText: flashcards[index].frontText,
                 backText: flashcards[index].backText)));
   }
