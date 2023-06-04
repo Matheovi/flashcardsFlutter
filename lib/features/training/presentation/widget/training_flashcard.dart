@@ -12,6 +12,7 @@ class TrainingFlashcard extends StatefulWidget {
     required this.backText,
   });
 
+  @override
   State<TrainingFlashcard> createState() => _TrainingFlashcardState();
 }
 
@@ -32,6 +33,7 @@ class _TrainingFlashcardState extends State<TrainingFlashcard> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
         tween: Tween<double>(begin: 0, end: angle),
@@ -79,8 +81,7 @@ class _TrainingFlashcardState extends State<TrainingFlashcard> {
   Transform buildBackCard() {
     return Transform(
       alignment: Alignment.center,
-      transform: Matrix4.identity()
-        ..rotateY(pi),
+      transform: Matrix4.identity()..rotateY(pi),
       child: Card(
           child: Center(
               child: Text(
