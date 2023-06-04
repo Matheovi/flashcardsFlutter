@@ -56,19 +56,24 @@ class _InteractiveTrainingFlashcardState
           } else {
             backShown = false;
           }
-          return Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(val),
-            child: GestureDetector(
-                onTap: () {
-                  _flip();
-                },
-                child: Container(
-                  key: UniqueKey(),
-                  child: backShown ? buildBackCard() : buildFrontCard(),
-                )),
+          return Dismissible(
+            direction: DismissDirection.down,
+            key: UniqueKey(),
+            onDismissed: (direction) {},
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(val),
+              child: GestureDetector(
+                  onTap: () {
+                    _flip();
+                  },
+                  child: Container(
+                    key: UniqueKey(),
+                    child: backShown ? buildBackCard() : buildFrontCard(),
+                  )),
+            ),
           );
         });
   }
@@ -76,21 +81,20 @@ class _InteractiveTrainingFlashcardState
   Card buildFrontCard() {
     return Card(
         child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          widget.frontText,
-        ),
-        TextField(onChanged: (text) {
-          textToVerify = text;
-        },
-          decoration : const InputDecoration(
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text(
+        widget.frontText,
+      ),
+      TextField(
+          onChanged: (text) {
+            textToVerify = text;
+          },
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter correct',
-        ))
-      ]
-    )));
+          ))
+    ])));
   }
 
   Transform buildBackCard() {
@@ -98,32 +102,27 @@ class _InteractiveTrainingFlashcardState
       alignment: Alignment.center,
       transform: Matrix4.identity()..rotateY(pi),
       child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text(
-        widget.backText,
-      ),
-              Text("Correctness: $percentCorrectness %"),
-
-          Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-      width: double.infinity,
-      child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: () {
-          //TODO: Ni mom pojęcia jak z tego poziomu wywalić zaliczoną fiszke (Riverpod perhaps???)
-
-        },
-        child: const Text('DONE'),
-      ),
-    ),
-    ),
-    )
-
-
-              ])),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          widget.backText,
+        ),
+        Text("Correctness: $percentCorrectness %"),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  //TODO: Ni mom pojęcia jak z tego poziomu wywalić zaliczoną fiszke (Riverpod perhaps???)
+                },
+                child: const Text('DONE'),
+              ),
+            ),
+          ),
+        )
+      ])),
     );
   }
 }

@@ -22,6 +22,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
     const Flashcard(frontText: "pomidor", backText: "tomato"),
   ];
 
+  final List<bool> interactive = [true, false, true, false, true, false, true];
+
   @override
   void initState() {
     super.initState();
@@ -45,16 +47,22 @@ class _TrainingScreenState extends State<TrainingScreen> {
           )),
     );
   }
+
 //TODO: W zależności od typu fiszki, dać stosowny widget do listy
   Widget _buildStack(BuildContext context) {
     return Stack(
         fit: StackFit.expand,
-        //children: List<TrainingFlashcard>.generate(
-        children: List<InteractiveTrainingFlashcard>.generate(
-            flashcards.length,
-            (index) => InteractiveTrainingFlashcard(context,
-            //(index) => TrainingFlashcard(context,
+        children: List<Widget>.generate(flashcards.length, (index) {
+          if (interactive[index]) {
+            return InteractiveTrainingFlashcard(context,
+                //(index) => TrainingFlashcard(context,
                 frontText: flashcards[index].frontText,
-                backText: flashcards[index].backText)));
+                backText: flashcards[index].backText);
+          } else {
+            return TrainingFlashcard(context,
+                frontText: flashcards[index].frontText,
+                backText: flashcards[index].backText);
+          }
+        }));
   }
 }
