@@ -113,7 +113,6 @@ class _InteractiveTrainingFlashcardState
               child: ElevatedButton(
                 onPressed: () {
                   widget.onDelete(widget.index);
-                  //TODO: Ni mom pojęcia jak z tego poziomu wywalić zaliczoną fiszke (Riverpod perhaps???)
                 },
                 child: const Text('DONE'),
               ),

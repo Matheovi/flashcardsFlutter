@@ -5,7 +5,7 @@ import 'package:flashcards/features/training/presentation/widget/training_flashc
 import '../widget/interactive_training_flashcard.dart';
 
 class TrainingScreen extends StatefulWidget {
-  TrainingScreen({super.key});
+  const TrainingScreen({super.key});
 
   @override
   State<TrainingScreen> createState() => _TrainingScreenState();
@@ -29,12 +29,13 @@ class _TrainingScreenState extends State<TrainingScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
-      child: GestureDetector(
+        onWillPop: () async {
+          return true;
+        },
+        child: GestureDetector(
           onTap: () {
             debugPrint(flashcards.last.frontText);
             setState(() {
@@ -48,8 +49,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
     );
   }
 
-//TODO: W zależności od typu fiszki, dać stosowny widget do listy
   Widget _buildStack(BuildContext context) {
+    debugPrint(flashcards.toString());
     return Stack(
         fit: StackFit.expand,
         children: List<Widget>.generate(flashcards.length, (index) {
@@ -59,12 +60,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
               index: index,
               frontText: flashcards[index].frontText,
               backText: flashcards[index].backText,
-              onDelete: (index) {
-                setState(() {
-                  flashcards.removeAt(index);
-                  interactive.removeAt(index);
-                });
-              },
+              onDelete: removeFlashcard,
             );
           } else {
             return TrainingFlashcard(
@@ -74,12 +70,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
               backText: flashcards[index].backText,
               onDelete: (index) {
                 setState(() {
-                  flashcards.removeAt(index);
-                  interactive.removeAt(index);
-                });
-              },
-            );
-          }
-        }));
+      flashcards.removeAt(index);
+      interactive.removeAt(index);
+    });
   }
 }
