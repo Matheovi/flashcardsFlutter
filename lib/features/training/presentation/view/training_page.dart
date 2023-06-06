@@ -43,10 +43,15 @@ class _TrainingScreenState extends State<TrainingScreen> {
             });
           },
           child: Center(
-            child:
-                SizedBox(height: 300, width: 200, child: _buildStack(context)),
-          )),
-    );
+            child: AspectRatio(
+              aspectRatio: 2 / 3,
+              child: Padding(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
+                child: _buildStack(context),
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget _buildStack(BuildContext context) {
