@@ -64,6 +64,7 @@ class _TrainingFlashcardState extends State<TrainingFlashcard> {
                     if (direction == DismissDirection.endToStart) {
                       debugPrint("NotLearned :(:(:(:(");
                     }
+                    widget.onDelete(widget.index);
                   },
                   key: UniqueKey(),
                   child: backShown ? buildBackCard() : buildFrontCard(),

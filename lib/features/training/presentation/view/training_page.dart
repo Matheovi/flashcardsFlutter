@@ -68,8 +68,14 @@ class _TrainingScreenState extends State<TrainingScreen> {
               index: index,
               frontText: flashcards[index].frontText,
               backText: flashcards[index].backText,
-              onDelete: (index) {
-                setState(() {
+              onDelete: removeFlashcard,
+            );
+          }
+        }));
+  }
+
+  void removeFlashcard(int index) {
+    return setState(() {
       flashcards.removeAt(index);
       interactive.removeAt(index);
     });
