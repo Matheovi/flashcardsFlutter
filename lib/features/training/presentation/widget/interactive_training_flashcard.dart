@@ -4,13 +4,15 @@ import 'dart:math';
 class InteractiveTrainingFlashcard extends StatefulWidget {
   final String frontText;
   final String backText;
+  final Function(int) onDelete;
+  final int index;
 
-  const InteractiveTrainingFlashcard(
-    BuildContext context, {
-    super.key,
-    required this.frontText,
-    required this.backText,
-  });
+  const InteractiveTrainingFlashcard(BuildContext context,
+      {super.key,
+      required this.index,
+      required this.frontText,
+      required this.backText,
+      required this.onDelete});
 
   @override
   State<InteractiveTrainingFlashcard> createState() =>
@@ -56,24 +58,19 @@ class _InteractiveTrainingFlashcardState
           } else {
             backShown = false;
           }
-          return Dismissible(
-            direction: DismissDirection.down,
-            key: UniqueKey(),
-            onDismissed: (direction) {},
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001)
-                ..rotateY(val),
-              child: GestureDetector(
-                  onTap: () {
-                    _flip();
-                  },
-                  child: Container(
-                    key: UniqueKey(),
-                    child: backShown ? buildBackCard() : buildFrontCard(),
-                  )),
-            ),
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(val),
+            child: GestureDetector(
+                onTap: () {
+                  _flip();
+                },
+                child: Container(
+                  key: UniqueKey(),
+                  child: backShown ? buildBackCard() : buildFrontCard(),
+                )),
           );
         });
   }
@@ -115,6 +112,7 @@ class _InteractiveTrainingFlashcardState
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () {
+                  widget.onDelete(widget.index);
                   //TODO: Ni mom pojęcia jak z tego poziomu wywalić zaliczoną fiszke (Riverpod perhaps???)
                 },
                 child: const Text('DONE'),

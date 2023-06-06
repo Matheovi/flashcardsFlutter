@@ -4,13 +4,15 @@ import 'dart:math';
 class TrainingFlashcard extends StatefulWidget {
   final String frontText;
   final String backText;
+  final Function(int) onDelete;
+  final int index;
 
-  const TrainingFlashcard(
-    BuildContext context, {
-    super.key,
-    required this.frontText,
-    required this.backText,
-  });
+  const TrainingFlashcard(BuildContext context,
+      {super.key,
+      required this.index,
+      required this.frontText,
+      required this.backText,
+      required this.onDelete});
 
   @override
   State<TrainingFlashcard> createState() => _TrainingFlashcardState();

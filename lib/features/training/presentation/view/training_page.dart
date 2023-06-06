@@ -54,14 +54,31 @@ class _TrainingScreenState extends State<TrainingScreen> {
         fit: StackFit.expand,
         children: List<Widget>.generate(flashcards.length, (index) {
           if (interactive[index]) {
-            return InteractiveTrainingFlashcard(context,
-                //(index) => TrainingFlashcard(context,
-                frontText: flashcards[index].frontText,
-                backText: flashcards[index].backText);
+            return InteractiveTrainingFlashcard(
+              context,
+              index: index,
+              frontText: flashcards[index].frontText,
+              backText: flashcards[index].backText,
+              onDelete: (index) {
+                setState(() {
+                  flashcards.removeAt(index);
+                  interactive.removeAt(index);
+                });
+              },
+            );
           } else {
-            return TrainingFlashcard(context,
-                frontText: flashcards[index].frontText,
-                backText: flashcards[index].backText);
+            return TrainingFlashcard(
+              context,
+              index: index,
+              frontText: flashcards[index].frontText,
+              backText: flashcards[index].backText,
+              onDelete: (index) {
+                setState(() {
+                  flashcards.removeAt(index);
+                  interactive.removeAt(index);
+                });
+              },
+            );
           }
         }));
   }
